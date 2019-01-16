@@ -1,0 +1,57 @@
+server:
+  port: 8088
+  #数据库连接信息
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/koadatabase?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=UTC
+    password: 1234
+    username: root
+    #druid 连接池配置信息
+  druid:
+    #初始化连接大小
+    initialSize: 5
+    #最小连接池数量
+    minIdle: 5
+    #最大连接池数量
+    maxActive: 20
+    #获取连接时最大等待时间，单位毫秒
+    maxWait: 60000
+    #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    #配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 300000
+    #测试连接
+    validationQuery: SELECT 1 FROM DUAL
+    #申请连接的时候检测，建议配置为true，不影响性能，并且保证安全性
+    testWhileIdle: true
+    #获取连接时执行检测，建议关闭，影响性能
+    testOnBorrow: false
+    #归还连接时执行检测，建议关闭，影响性能
+    testOnReturn: false
+    #是否开启PSCache，PSCache对支持游标的数据库性能提升巨大，oracle建议开启，mysql下建议关闭
+    poolPreparedStatements: false
+    #开启poolPreparedStatements后生效
+    maxPoolPreparedStatementPerConnectionSize: 20
+    #配置扩展插件，常用的插件有=>stat:监控统计  log4j:日志  wall:防御sql注入
+    filters: stat,wall,log4j
+    #通过connectProperties属性来打开mergeSql功能;慢SQL记录
+    connectionProperties: 'druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000'
+mybatis-plus:
+  # 如果是放在src/main/java目录下 classpath:/com/ybb/*/mapper/xml/*Mapper.xml
+  # 如果是放在resource目录 classpath:/mapper/*Mapper.xml
+  mapper-locations: classpath:/com/ybb/*/mapper/xml/*Mapper.xml
+  global-config:
+    db-config:
+      # 字段策略
+      field-strategy: not_empty
+      id-type: auto
+      db-type: mysql
+    banner: false
+  # 实体扫描，多个package用逗号或者分号分隔
+  type-aliases-package: com.ybb.sys.entity
+  # SQl打印
+logging:
+  level:
+    com.ybb.sys.mapper: DEBUG
+
