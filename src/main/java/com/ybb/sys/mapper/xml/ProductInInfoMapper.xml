@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ybb.sys.mapper.ProductInInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ybb.sys.entity.ProductInInfo">
+        <id column="inId" property="inId" />
+        <result column="productId" property="productId" />
+        <result column="productNo" property="productNo" />
+        <result column="productName" property="productName" />
+        <result column="providerName" property="providerName" />
+        <result column="productColor" property="productColor" />
+        <result column="productSize" property="productSize" />
+        <result column="productNum" property="productNum" />
+        <result column="productPrice" property="productPrice" />
+        <result column="productSetPrice" property="productSetPrice" />
+        <result column="inDate" property="inDate" />
+        <result column="expressNo" property="expressNo" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        inId, productId, productNo, productName, providerName, productColor, productSize, productNum, productPrice, productSetPrice, inDate, expressNo
+    </sql>
+
+</mapper>

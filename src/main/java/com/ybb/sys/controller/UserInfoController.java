@@ -3,10 +3,10 @@ package com.ybb.sys.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ybb.sys.entity.Userinfo;
-import com.ybb.sys.service.UserinfoService;
+import com.ybb.framework.constant.Message;
+import com.ybb.sys.entity.UserInfo;
+import com.ybb.sys.service.UserInfoService;
 import io.swagger.annotations.*;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,19 +21,19 @@ import java.util.List;
  * </p>
  *
  * @author WQ
- * @since 2019-01-16
+ * @since 2019-04-25
  */
 @RestController
-@RequestMapping("/sys/userinfo")
+@RequestMapping("/sys/user-info")
 @Api("UserInfoController相关接口")
-public class UserinfoController {
+public class UserInfoController {
 
     @Autowired
-    private UserinfoService userinfoService;
+    private UserInfoService userinfoService;
 
     @RequestMapping("/saveUserInfo")
     public boolean saveUser(){
-        Userinfo userinfo = new Userinfo();
+        UserInfo userinfo = new UserInfo();
         userinfo.setPassWord("666");
         userinfo.setUserName("wq");
         boolean returnData  = userinfoService.save(userinfo);
@@ -50,10 +50,19 @@ public class UserinfoController {
             @ApiResponse(code=404,message="请求路径没错误")
     })
     @RequestMapping("/getUserPage")
-    public List<Userinfo> getUserInfoPage(@RequestParam Integer current, @RequestParam Integer size){
-        Page<Userinfo> page = new Page<>(current,size);
-        IPage<Userinfo> result = userinfoService.page(page);
-        return result.getRecords();
+    public Message getUserInfoPage(@RequestParam Integer current, @RequestParam Integer size){
+        IPage<UserInfo> result = null;
+        try {
+            if(current==0){
+                throw new Exception();
+            }
+            Page<UserInfo> page = new Page<>(current,size);
+            result = userinfoService.page(page);
+            return Message.SUCCESS(result.getRecords());
+        } catch (Exception e) {
+            return Message.PARAMETER_ISNULL;
+        }
     }
-
 }
+
+

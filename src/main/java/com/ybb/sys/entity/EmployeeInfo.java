@@ -15,12 +15,12 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author WQ
- * @since 2019-01-16
+ * @since 2019-04-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class Employeeinfo implements Serializable {
+public class EmployeeInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

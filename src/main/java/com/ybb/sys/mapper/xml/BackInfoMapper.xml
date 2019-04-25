@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ybb.sys.mapper.BackInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ybb.sys.entity.BackInfo">
+        <id column="backId" property="backId" />
+        <result column="backProductId" property="backProductId" />
+        <result column="backProductNum" property="backProductNum" />
+        <result column="backEmployeeNo" property="backEmployeeNo" />
+        <result column="backExpressNo" property="backExpressNo" />
+        <result column="backDate" property="backDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        backId, backProductId, backProductNum, backEmployeeNo, backExpressNo, backDate
+    </sql>
+
+</mapper>

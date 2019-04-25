@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ybb.sys.mapper.EmployeeinfoMapper">
+<mapper namespace="com.ybb.sys.mapper.EmployeeInfoMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.ybb.sys.entity.Employeeinfo">
+    <resultMap id="BaseResultMap" type="com.ybb.sys.entity.EmployeeInfo">
         <id column="employeeNo" property="employeeNo" />
         <result column="employeeName" property="employeeName" />
         <result column="employeeSex" property="employeeSex" />

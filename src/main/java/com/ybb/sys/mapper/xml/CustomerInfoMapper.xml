@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ybb.sys.mapper.CustomerInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ybb.sys.entity.CustomerInfo">
+        <id column="customerNo" property="customerNo" />
+        <result column="customerName" property="customerName" />
+        <result column="customerLevel" property="customerLevel" />
+        <result column="customerPhone" property="customerPhone" />
+        <result column="customerAddress" property="customerAddress" />
+        <result column="customerDate" property="customerDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        customerNo, customerName, customerLevel, customerPhone, customerAddress, customerDate
+    </sql>
+
+</mapper>

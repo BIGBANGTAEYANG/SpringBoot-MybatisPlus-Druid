@@ -1,6 +1,6 @@
 package com.ybb.sys.service;
 
-import com.ybb.sys.entity.Userinfo;
+import com.ybb.sys.entity.ProductInInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author WQ
- * @since 2019-01-16
+ * @since 2019-04-25
  */
-public interface UserinfoService extends IService<Userinfo> {
+public interface ProductInInfoService extends IService<ProductInInfo> {
 
 }

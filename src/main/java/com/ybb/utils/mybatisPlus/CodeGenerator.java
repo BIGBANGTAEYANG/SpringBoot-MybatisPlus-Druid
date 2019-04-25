@@ -14,7 +14,8 @@ public class CodeGenerator {
 
     private final static String MODULE_NAME= "sys";
 
-    private final static String[] TABLE_NAME = {"userinfo","employeeinfo"};
+    private final static String[] TABLE_NAME = {"product_in_info","customer_info","back_info","sell_info","use_log","employee_info","stack_info","user_info"};
+    //"sys_dict","sys_dict_item","sys_menu","sys_role","sys_role_tr","sys_tr","sys_user_role"
 
     public static void main(String[] args) {
         for (int i = 0; i < TABLE_NAME.length; i++) {

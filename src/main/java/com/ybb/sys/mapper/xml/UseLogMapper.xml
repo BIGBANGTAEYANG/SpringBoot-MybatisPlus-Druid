@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ybb.sys.mapper.UseLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ybb.sys.entity.UseLog">
+        <id column="logNo" property="logNo" />
+        <result column="userName" property="userName" />
+        <result column="interfaceName" property="interfaceName" />
+        <result column="inMessage" property="inMessage" />
+        <result column="outMessage" property="outMessage" />
+        <result column="useTime" property="useTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        logNo, userName, interfaceName, inMessage, outMessage, useTime
+    </sql>
+
+</mapper>
