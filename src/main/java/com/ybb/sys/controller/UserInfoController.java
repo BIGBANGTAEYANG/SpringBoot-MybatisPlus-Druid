@@ -10,6 +10,7 @@ import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,13 +32,32 @@ public class UserInfoController {
     @Autowired
     private UserInfoService userinfoService;
 
-    @RequestMapping("/saveUserInfo")
-    public boolean saveUser(){
-        UserInfo userinfo = new UserInfo();
-        userinfo.setPassWord("666");
-        userinfo.setUserName("wq");
-        boolean returnData  = userinfoService.save(userinfo);
-        return returnData;
+
+    @RequestMapping("/userRegister")
+    public Message userRegister(@RequestParam String userName,@RequestParam String passWord){
+        Message message = null;
+        try {
+            if(userinfoService.findUserByUserName(userName).size()>0){
+                    message = Message.USERNAME_REPEAT;
+            }else{
+                UserInfo userinfo = new UserInfo();
+                userinfo.setPassWord(passWord);
+                userinfo.setUserName(userName);
+                userinfoService.save(userinfo);
+                message = Message.SUCCESS(null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = Message.SERVER_EXCEPTION;
+        }
+        return message;
+    }
+
+
+
+    @RequestMapping(value = "/userNameSearch",method = RequestMethod.POST)
+    public Message userNameSearch(@RequestParam String userName){
+        return Message.SUCCESS(userinfoService.findUserByUserName(userName).size());
     }
 
     @ApiOperation(value = "分页查询",notes = "分页查询用户信息")
@@ -50,16 +70,14 @@ public class UserInfoController {
             @ApiResponse(code=404,message="请求路径没错误")
     })
     @RequestMapping("/getUserPage")
-    public Message getUserInfoPage(@RequestParam Integer current, @RequestParam Integer size){
+    public Message getUserInfoPage(@RequestParam Integer start, @RequestParam Integer length){
         IPage<UserInfo> result = null;
         try {
-            if(current==0){
-                throw new Exception();
-            }
-            Page<UserInfo> page = new Page<>(current,size);
+            Page<UserInfo> page = new Page<>(start,length);
             result = userinfoService.page(page);
             return Message.SUCCESS(result.getRecords());
         } catch (Exception e) {
+            e.printStackTrace();
             return Message.PARAMETER_ISNULL;
         }
     }

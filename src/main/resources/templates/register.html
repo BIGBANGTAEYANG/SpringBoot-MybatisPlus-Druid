@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>YBB Admin - Register</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin.css" rel="stylesheet">
+
+    <style>
+      .userExist{
+        color: red;
+      }
+      .userNoExist{
+        color: green;
+      }
+    </style>
+
+  </head>
+
+  <body class="bg-dark">
+
+    <div class="container">
+      <div class="card card-register mx-auto mt-5">
+        <div class="card-header">用户注册</div>
+        <div class="card-body">
+          <form>
+            <div class="form-group">
+                <div class="form-label-group">
+                  <input type="text" id="userName" class="form-control" placeholder="userName" required="required" autofocus="autofocus" onblur="userNameSearch()">
+                  <label for="userName">用户名</label>
+                </div>
+                <label id="userExist" class="userExist" style="margin-top: 10px;margin-left: 10px;display:none">用户名已存在</label>
+                <label id="userNoExist" class="userNoExist" style="margin-top: 10px;margin-left: 10px;display:none">用户名可使用</label>
+            </div>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-6">
+                  <div class="form-label-group">
+                    <input type="password" id="passWord" class="form-control" placeholder="passWord" required="required">
+                    <label for="passWord">密码</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-label-group">
+                    <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm password" required="required">
+                    <label for="confirmPassword">确认密码</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <a class="btn btn-primary btn-block" onclick="userRegister()">注册</a>
+          </form>
+          <div class="text-center">
+            <a class="d-block small mt-3" href="/login">用户登录</a>
+            <a class="d-block small" href="forgot-password.html">忘记密码?</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="page/userLogin.js"></script>
+
+  </body>
+
+</html>
