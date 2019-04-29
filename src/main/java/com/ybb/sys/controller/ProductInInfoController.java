@@ -1,7 +1,10 @@
 package com.ybb.sys.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.ybb.framework.SuperController;
 import com.ybb.framework.constant.Message;
+import com.ybb.framework.constant.PageCons;
 import com.ybb.sys.entity.ProductInInfo;
 import com.ybb.sys.entity.UserInfo;
 import com.ybb.sys.service.ProductInInfoService;
@@ -24,7 +27,7 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/sys/product-in-info")
 @Api("ProductInInfoController相关接口")
-public class ProductInInfoController {
+public class ProductInInfoController extends SuperController{
 
     @Autowired
     private ProductInInfoService productInInfoService;
@@ -40,5 +43,20 @@ public class ProductInInfoController {
         } catch (Exception e) {
             return Message.SERVER_EXCEPTION;
         }
+    }
+
+
+    @RequestMapping("/getProductPage")
+    public PageCons getProductInfoPage(PageCons pageCons, @RequestParam("search[value]") String search, @RequestParam("order[0][column]") String orderColumn, @RequestParam("order[0][dir]") String orderSort){
+        try {
+            String orderColumnName = request.getParameter("columns[" + orderColumn + "][name]");
+            IPage<ProductInInfo> result = productInInfoService.dataTableProductInInfoService(search,pageCons.getStart(),pageCons.getLength(),orderColumnName,orderSort);
+            pageCons.setData(result.getRecords());
+            pageCons.setRecordsTotal(Long.valueOf(result.getTotal()));
+            pageCons.setRecordsFiltered(Long.valueOf(result.getTotal()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pageCons;
     }
 }

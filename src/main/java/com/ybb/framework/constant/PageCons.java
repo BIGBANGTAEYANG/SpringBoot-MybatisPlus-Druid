@@ -1,29 +1,40 @@
 package com.ybb.framework.constant;
 
-public interface PageCons {
+import lombok.Data;
+
+import java.util.List;
+
+@Data
+public class PageCons<T> {
+
     /**
-     * 页数
+     * 查询起始
      */
-    String PAGE_PAGE = "cursor";
+    private int draw;
+
     /**
-     * 分页大小
+     * 查询起始
      */
-    String PAGE_ROWS = "limit";
+    private int start;
+
     /**
-     * 排序字段 ASC
+     * 查询每页长度
      */
-    String PAGE_ASCS = "ascs";
-    /**
-     * 排序字段 DESC
-     */
-    String PAGE_DESCS = "descs";
+    private int length;
+
     /**
      * 查询总数
      */
-    String SEARCH_COUNT = "searchCount";
+    private long recordsTotal;
+
     /**
-     * 默认每页条目20,最大条目数100
+     * 查询过滤记录
      */
-    int DEFAULT_LIMIT = 20;
-    int MAX_LIMIT = 100;
+    private long recordsFiltered;
+
+    /**
+     * 查询数据
+     */
+    private List<T> data;
+
 }

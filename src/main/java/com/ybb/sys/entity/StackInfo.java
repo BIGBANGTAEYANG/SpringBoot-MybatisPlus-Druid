@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -82,13 +84,13 @@ public class StackInfo implements Serializable {
      * 入库时间
      */
     @TableField("inStackDate")
-    private LocalDateTime inStackDate;
+    private Date inStackDate;
 
     /**
      * 最后更新库存时间(进货，退货，销售都会更新数据）
      */
     @TableField("updateStackDate")
-    private LocalDateTime updateStackDate;
+    private Date updateStackDate;
 
 
 }

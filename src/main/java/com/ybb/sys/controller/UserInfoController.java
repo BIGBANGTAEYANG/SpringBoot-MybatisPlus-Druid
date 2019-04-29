@@ -2,19 +2,14 @@ package com.ybb.sys.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.ybb.framework.SuperController;
 import com.ybb.framework.constant.Message;
+import com.ybb.framework.constant.PageCons;
 import com.ybb.sys.entity.UserInfo;
 import com.ybb.sys.service.UserInfoService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -27,7 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/sys/user-info")
 @Api("UserInfoController相关接口")
-public class UserInfoController {
+public class UserInfoController extends SuperController{
 
     @Autowired
     private UserInfoService userinfoService;
@@ -60,26 +55,18 @@ public class UserInfoController {
         return Message.SUCCESS(userinfoService.findUserByUserName(userName).size());
     }
 
-    @ApiOperation(value = "分页查询",notes = "分页查询用户信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "current",value = "当前页数",dataType = "Integer",paramType = "int",example = "0"),
-            @ApiImplicitParam(name = "size",value = "每页数量",dataType = "Integer",paramType = "int",example = "10")
-    })
-    @ApiResponses({
-            @ApiResponse(code=400,message = "请求参数错误"),
-            @ApiResponse(code=404,message="请求路径没错误")
-    })
     @RequestMapping("/getUserPage")
-    public Message getUserInfoPage(@RequestParam Integer start, @RequestParam Integer length){
-        IPage<UserInfo> result = null;
+    public PageCons getUserInfoPage(PageCons pageCons,@RequestParam("search[value]") String search,@RequestParam("order[0][column]") String orderColumn, @RequestParam("order[0][dir]") String orderSort){
         try {
-            Page<UserInfo> page = new Page<>(start,length);
-            result = userinfoService.page(page);
-            return Message.SUCCESS(result.getRecords());
+            String orderColumnName = request.getParameter("columns[" + orderColumn + "][name]");
+            IPage<UserInfo> result = userinfoService.dataTableUserInfoService(search,pageCons.getStart(),pageCons.getLength(),orderColumnName,orderSort);
+            pageCons.setData(result.getRecords());
+            pageCons.setRecordsTotal(Long.valueOf(result.getTotal()));
+            pageCons.setRecordsFiltered(Long.valueOf(result.getTotal()));
         } catch (Exception e) {
             e.printStackTrace();
-            return Message.PARAMETER_ISNULL;
         }
+        return pageCons;
     }
 }
 

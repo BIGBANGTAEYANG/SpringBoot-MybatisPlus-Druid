@@ -1,6 +1,8 @@
 package com.ybb.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ybb.sys.entity.UserInfo;
 import com.ybb.sys.mapper.UserInfoMapper;
 import com.ybb.sys.service.UserInfoService;
@@ -29,5 +31,18 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userName",userName);
         return userInfoMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public IPage<UserInfo> dataTableUserInfoService(String search, int start, int length, String orderColumnName, String orderSort) {
+        QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
+        IPage<UserInfo> page = new Page<>(start,length);
+        if(orderSort.equals("asc")){
+            queryWrapper.orderByAsc(orderColumnName);
+        }else{
+            queryWrapper.orderByDesc(orderColumnName);
+        }
+        queryWrapper.like("userName",search).or().like("passWord",search);
+        return userInfoMapper.selectPage(page,queryWrapper);
     }
 }

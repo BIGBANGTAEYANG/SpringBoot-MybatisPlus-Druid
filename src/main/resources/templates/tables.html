@@ -23,6 +23,8 @@
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
 
+  <link href="datetimepicker/assets/css/tempusdominus-bootstrap-4.css" rel="stylesheet">
+
 </head>
 
 <body id="page-top">
@@ -137,25 +139,125 @@
         <li class="breadcrumb-item active">库存报表</li>
       </ol>
 
-      <div class="card mb-3">
-        <div class="card-header">
-          <i class="fas fa-table"></i>
-          Data Table Example</div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <thead>
-              <tr>
-              <th>ID</th>
-              <th>姓名</th>
-              <th>密码</th>
-              </tr>
-              </thead>
-            </table>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="card">
+            <div class="card-header text-white bg-info">货品入库</div>
+            <div class="card-body">
+              <form id="stockForm">
+              <div class="row mb-3">
+                <div class="input-group input-group-sm col-sm-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" >条码</span>
+                </div>
+                <input type="text" class="form-control" id="productId" autofocus="autofocus" name="productId">
+              </div>
+                <div class="input-group input-group-sm col-sm-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">商品编码</span>
+                  </div>
+                  <input type="text" class="form-control" id="productNo" name="productNo">
+                </div>
+                <div class="input-group input-group-sm col-sm-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">商品名称</span>
+                  </div>
+                  <input type="text" class="form-control" id="productName" name="productName">
+                </div>
+                <div class="input-group input-group-sm col-sm-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">发货商</span>
+                  </div>
+                  <input type="text" class="form-control" id="providerName" name="providerName">
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="input-group input-group-sm col-sm-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">进价</span>
+                  </div>
+                  <input type="text" class="form-control" id="productPrice" name="productPrice">
+                </div>
+                <div class="input-group input-group-sm col-sm-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">定价</span>
+                  </div>
+                  <input type="text" class="form-control" id="productSetPrice" name="productSetPrice">
+                </div>
+                <div class="input-group input-group-sm col-sm-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">商品颜色</span>
+                  </div>
+                  <input type="text" class="form-control" id="productColor" name="productColor">
+                </div>
+                <div class="input-group input-group-sm col-sm-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">商品数量</span>
+                  </div>
+                  <input type="text" class="form-control" id="productNum" name="productNum">
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="input-group input-group-sm col-sm-4 date" id="inStackDate" data-target-input="nearest">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">入库时间</span>
+                  </div>
+                  <input type="text" class="form-control datetimepicker-input" data-target="#inStackDate" name="inStackDate"/>
+                  <div class="input-group-append" data-target="#inStackDate" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                  </div>
+                </div>
+                <div class="input-group input-group-sm col-sm-2">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">尺码</span>
+                  </div>
+                  <select name="productSize" class="custom-select-sm" id="productSize">
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                  </select>
+                </div>
+              </div>
+
+              <a class="btn btn-info text-white" onclick="stockSave()">添加入库</a>
+              </form>
+            </div>
           </div>
         </div>
-        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
       </div>
+
+      <div class="row" style="height: 15px;"></div>
+
+      <div class="card mb-3">
+        <div class="card-header">
+          <i class="fas fa-table"></i> 库存详细表</div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead class="text-white bg-info">
+                  <tr class="text-white">
+                  <th>条码</th>
+                  <th>商品编码</th>
+                  <th>商品名称</th>
+                  <th>发货商</th>
+                  <th>颜色</th>
+                  <th>尺码</th>
+                  <th>库存数量</th>
+                  <th>进价</th>
+                  <th>定价</th>
+                  <th>入库时间</th>
+                  <th>库存更新时间</th>
+                  </tr>
+                  </thead>
+                </table>
+              </div>
+            </div>
+        <div class="card-footer small text-muted"></div>
+      </div>
+
+    </div>
 
     </div>
     <!-- /.container-fluid -->
@@ -202,26 +304,20 @@
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
 <!-- Core plugin JavaScript-->
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
 <!-- Page level plugin JavaScript-->
-<script src="vendor/chart.js/Chart.min.js"></script>
 <script src="vendor/datatables/jquery.dataTables.js"></script>
 <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-
 <!-- Custom scripts for all pages-->
 <script src="js/sb-admin.min.js"></script>
-
 <!-- Demo scripts for this page-->
 <script src="js/demo/datatables-demo.js"></script>
-<script src="js/demo/chart-area-demo.js"></script>
-
 <!-- scripts for this page-->
 <script src="page/tables.js"></script>
 
-
+<script src="datetimepicker/js/moment.js"></script>
+<script src="datetimepicker/assets/js/tempusdominus-bootstrap-4.js"></script>
 </body>
 
 </html>

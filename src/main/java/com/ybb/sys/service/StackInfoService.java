@@ -1,5 +1,6 @@
 package com.ybb.sys.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ybb.sys.entity.StackInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface StackInfoService extends IService<StackInfo> {
 
+    IPage<StackInfo> dataTableStackInfoService(String search, int start, int length, String orderColumnName, String orderSort);
 }

@@ -11,7 +11,7 @@ function userLogin(){
         },
         success: function(res) {
             if(res.returnCode==200){
-                window.location.href="/index";
+                window.location.href=res.data;
             }else{
                 alert(res.returnMsg);
             }

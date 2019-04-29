@@ -90,7 +90,7 @@ public class ProductInInfo implements Serializable {
      * 收货流水时间
      */
     @TableField("inDate")
-    private Date inDate;
+    private String inDate;
 
     /**
      * 快递单号
