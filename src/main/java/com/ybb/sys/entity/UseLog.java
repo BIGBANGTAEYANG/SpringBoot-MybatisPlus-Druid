@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -55,7 +57,7 @@ public class UseLog implements Serializable {
      * 使用接口时间
      */
     @TableField("useTime")
-    private LocalDateTime useTime;
+    private Date useTime;
 
 
 }

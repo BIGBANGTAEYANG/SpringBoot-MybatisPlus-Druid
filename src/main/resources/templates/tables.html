@@ -136,13 +136,13 @@
         <li class="breadcrumb-item">
           <a href="/index">主页</a>
         </li>
-        <li class="breadcrumb-item active">库存报表</li>
+        <li class="breadcrumb-item active">进货流水报表</li>
       </ol>
 
       <div class="row">
         <div class="col-sm-12">
           <div class="card">
-            <div class="card-header text-white bg-info">货品入库</div>
+            <div class="card-header text-white bg-info">货品进货流水</div>
             <div class="card-body">
               <form id="stockForm">
               <div class="row mb-3">
@@ -200,14 +200,11 @@
               </div>
 
               <div class="row mb-3">
-                <div class="input-group input-group-sm col-sm-4 date" id="inStackDate" data-target-input="nearest">
+                <div class="input-group input-group-sm col-sm-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">入库时间</span>
+                    <span class="input-group-text">快递单号</span>
                   </div>
-                  <input type="text" class="form-control datetimepicker-input" data-target="#inStackDate" name="inStackDate"/>
-                  <div class="input-group-append" data-target="#inStackDate" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                  </div>
+                  <input type="text" class="form-control" id="expressNo" name="expressNo">
                 </div>
                 <div class="input-group input-group-sm col-sm-2">
                   <div class="input-group-prepend">
@@ -219,9 +216,18 @@
                     <option value="L">L</option>
                   </select>
                 </div>
+                <div class="input-group input-group-sm col-sm-4 date" id="inDate" data-target-input="nearest">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">进货时间</span>
+                  </div>
+                  <input type="text" class="form-control datetimepicker-input" data-target="#inDate" name="inDate"/>
+                  <div class="input-group-append" data-target="#inDate" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                  </div>
+                </div>
               </div>
 
-              <a class="btn btn-info text-white" onclick="stockSave()">添加入库</a>
+              <a class="btn btn-info text-white" onclick="stockSave()">新增进货流水</a>
               </form>
             </div>
           </div>
@@ -232,12 +238,13 @@
 
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fas fa-table"></i> 库存详细表</div>
+          <i class="fas fa-table"></i> 进货流水表</div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead class="text-white bg-info">
                   <tr class="text-white">
+                  <th>ID</th>
                   <th>条码</th>
                   <th>商品编码</th>
                   <th>商品名称</th>
@@ -248,7 +255,7 @@
                   <th>进价</th>
                   <th>定价</th>
                   <th>入库时间</th>
-                  <th>库存更新时间</th>
+                  <th>快递单号</th>
                   </tr>
                   </thead>
                 </table>

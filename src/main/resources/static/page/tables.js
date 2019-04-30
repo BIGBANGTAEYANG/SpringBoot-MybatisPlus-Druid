@@ -7,22 +7,45 @@ $(document).ready(function(){
 
 });
 
+//循环取form表单数据
+function getFormData(formid) {
+    var data = {};
+    //获取TEXT文件内容
+    $("#" + formid + " input[type=text]").each(function(i, o) {
+        var jo = $(o);
+        if (jo.attr("name")) {
+            var str = jo.val();
+            str = str.replace(" ", "");
+            if (str !== "") {
+                data[jo.attr("name")] = jo.val();
+            }
+        }
+    });
+    data["productSize"]=$("#productSize").val();
+    return data;
+}
+
 
 function stockSave(){
     $.ajax({
        url:'/sys/product-in-info/productInAdd',
        type:'POST',
-       data:$("#stockForm").serialize(),
+       data:JSON.stringify(getFormData("stockForm")),
        dataType:"JSON",
+       contentType:"application/json;charset=utf-8",
        success:function(data){
-          console.log(data);
+           if(res.returnCode==200){
+               table.ajax.reload(null,false); //刷新table且分页不重置
+           }else{
+               alert(res.returnMsg);
+           }
        }
     });
 }
 
 function datetimeInit(){
     //时间控件
-    $('#inStackDate').datetimepicker({
+    $('#inDate').datetimepicker({
         useCurrent:true,
         icons: {
             time: 'fa fa-clock',
@@ -54,24 +77,25 @@ function dataTableInit(){
         bJQueryUI:true,
         ajax: {
             "type":"POST",
-            "url": "/sys/stack-info/getStackPage",
+            "url": "/sys/product-in-info/getProductPage",
             //"data": queryData,
             "dataSrc":function(res){
-                return res.data;    //自定义数据源，默认为data
+                return res.data;
             }
         },
         columns: [
-            { "data": "productId", "title": "条码", "name": "userId", "visible": true},
-            { "data": "productNo", "title": "商品编码", "name": "userName", "visible": true},
-            { "data": "productName", "title": "商品名称", "name": "passWord", "visible": true},
-            { "data": "providerName", "title": "发货商", "name": "userId", "visible": false},
-            { "data": "productColor", "title": "颜色", "name": "userName", "visible": true},
-            { "data": "productSize", "title": "尺码", "name": "passWord", "visible": true},
-            { "data": "productNum", "title": "商品数量", "name": "userId", "visible": false},
-            { "data": "productPrice", "title": "进价", "name": "userName", "visible": true},
-            { "data": "productSetPrice", "title": "定价", "name": "passWord", "visible": true},
-            { "data": "inStackDate", "title": "入库时间", "name": "passWord", "visible": true},
-            { "data": "updateStackDate", "title": "库存更新时间", "name": "passWord", "visible": true}
+            { "data": "inId", "title": "ID", "name": "inId", "visible": true},
+            { "data": "productId", "title": "条码", "name": "productId", "visible": true},
+            { "data": "productNo", "title": "商品编码", "name": "productNo", "visible": true},
+            { "data": "productName", "title": "商品名称", "name": "productName", "visible": true},
+            { "data": "providerName", "title": "发货商", "name": "providerName", "visible": false},
+            { "data": "productColor", "title": "颜色", "name": "productColor", "visible": true},
+            { "data": "productSize", "title": "尺码", "name": "productSize", "visible": true},
+            { "data": "productNum", "title": "商品数量", "name": "productNum", "visible": false},
+            { "data": "productPrice", "title": "进价", "name": "productPrice", "visible": true},
+            { "data": "productSetPrice", "title": "定价", "name": "productSetPrice", "visible": true},
+            { "data": "expressNo", "title": "快递单号", "name": "expressNo", "visible": true},
+            { "data": "inDate", "title": "入库时间", "name": "inDate", "visible": true}
         ],
         oLanguage: {    // 语言设置
             "sLengthMenu": "每页显示 _MENU_ 条记录",

@@ -84,13 +84,13 @@ public class StackInfo implements Serializable {
      * 入库时间
      */
     @TableField("inStackDate")
-    private Date inStackDate;
+    private String inStackDate;
 
     /**
      * 最后更新库存时间(进货，退货，销售都会更新数据）
      */
     @TableField("updateStackDate")
-    private Date updateStackDate;
+    private String updateStackDate;
 
 
 }

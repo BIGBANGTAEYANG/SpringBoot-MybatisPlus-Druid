@@ -5,16 +5,19 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ybb.framework.SuperController;
 import com.ybb.framework.constant.Message;
 import com.ybb.framework.constant.PageCons;
+import com.ybb.framework.constant.SessionConstant;
 import com.ybb.sys.entity.ProductInInfo;
-import com.ybb.sys.entity.UserInfo;
+import com.ybb.sys.entity.UseLog;
 import com.ybb.sys.service.ProductInInfoService;
+import com.ybb.sys.service.UseLogService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import javax.servlet.http.HttpServletRequest;
+
 
 /**
  * <p>
@@ -32,15 +35,23 @@ public class ProductInInfoController extends SuperController{
     @Autowired
     private ProductInInfoService productInInfoService;
 
+    @Autowired
+    private UseLogService useLogService;
+
+    @Transactional(rollbackFor = Exception.class)
     @RequestMapping(value = "/productInAdd",method = RequestMethod.POST)
     public Message productInAdd(@RequestBody ProductInInfo productInInfo){
         try {
-            if(productInInfoService.save(productInInfo)){
+            boolean flag = productInInfoService.save(productInInfo);
+            if(flag){
+                useLogService.save(UseLogInsert(productInInfo.toString(),Message.SUCCESS(null).toString(),request.getRequestURI()));
                 return Message.SUCCESS(null);
             }else {
                 throw new Exception();
             }
         } catch (Exception e) {
+            e.printStackTrace();
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return Message.SERVER_EXCEPTION;
         }
     }

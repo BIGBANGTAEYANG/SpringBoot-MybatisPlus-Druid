@@ -1,9 +1,14 @@
 package com.ybb.sys.controller;
 
 
+import com.ybb.framework.SuperController;
+import com.ybb.framework.constant.SessionConstant;
+import com.ybb.sys.entity.UseLog;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Date;
 
 /**
  * <p>
@@ -15,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/sys/use-log")
-public class UseLogController {
+public class UseLogController extends SuperController{
+
+
 
 }

@@ -56,6 +56,7 @@ public class HomeController extends SuperController{
             if(userInfoList.size()>0&&userInfoList.get(0).getPassWord().equals(passWord)){
                 httpSession.setAttribute(SessionConstant.USER_NAME,userName);
                 httpSession.setAttribute(SessionConstant.USER_PASSWORD,passWord);
+                UseLogInsert(userName,Message.SUCCESS("/index").toString(),request.getRequestURI());
                 message = Message.SUCCESS("/index");
             }else if (!userInfoList.get(0).getPassWord().equals(passWord)){
                 message = Message.USER_PASSWORD_ERR;
