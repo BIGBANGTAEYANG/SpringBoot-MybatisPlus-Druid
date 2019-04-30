@@ -4,6 +4,7 @@ import com.ybb.framework.SuperController;
 import com.ybb.framework.constant.Message;
 import com.ybb.framework.constant.SessionConstant;
 import com.ybb.sys.entity.UserInfo;
+import com.ybb.sys.service.UseLogService;
 import com.ybb.sys.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,9 @@ public class HomeController extends SuperController{
 
     @Autowired
     UserInfoService userinfoService;
+
+    @Autowired
+    UseLogService useLogService;
 
     @RequestMapping("/")
     public String login(){
@@ -56,7 +60,7 @@ public class HomeController extends SuperController{
             if(userInfoList.size()>0&&userInfoList.get(0).getPassWord().equals(passWord)){
                 httpSession.setAttribute(SessionConstant.USER_NAME,userName);
                 httpSession.setAttribute(SessionConstant.USER_PASSWORD,passWord);
-                UseLogInsert(userName,Message.SUCCESS("/index").toString(),request.getRequestURI());
+                useLogService.save(UseLogInsert(userName,Message.SUCCESS("/index").toString(),request.getRequestURI()));
                 message = Message.SUCCESS("/index");
             }else if (!userInfoList.get(0).getPassWord().equals(passWord)){
                 message = Message.USER_PASSWORD_ERR;

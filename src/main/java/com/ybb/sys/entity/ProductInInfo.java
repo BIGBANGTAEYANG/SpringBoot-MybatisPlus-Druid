@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import lombok.Data;
@@ -90,7 +91,7 @@ public class ProductInInfo implements Serializable {
      * 收货流水时间
      */
     @TableField("inDate")
-    private String inDate;
+    private Timestamp inDate;
 
     /**
      * 快递单号

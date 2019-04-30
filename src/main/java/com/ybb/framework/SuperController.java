@@ -4,6 +4,7 @@ import com.ybb.framework.constant.Message;
 import com.ybb.framework.constant.SessionConstant;
 import com.ybb.sys.entity.UseLog;
 import com.ybb.sys.entity.UserInfo;
+import com.ybb.sys.service.UseLogService;
 import com.ybb.sys.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,9 @@ public abstract class SuperController {
 
     @Autowired
     UserInfoService userinfoService;
+
+    @Autowired
+    UseLogService useLogService;
 
     @Autowired
     protected HttpServletRequest request;
@@ -39,7 +43,7 @@ public abstract class SuperController {
             String passWord = httpSession.getAttribute(SessionConstant.USER_PASSWORD)==null?"":httpSession.getAttribute(SessionConstant.USER_PASSWORD).toString();
             List<UserInfo> userInfoList = userinfoService.findUserByUserName(userName);
             if(userInfoList.size()>0&&userInfoList.get(0).getPassWord().equals(passWord)) {
-                UseLogInsert(page, Message.SUCCESS(page).toString(),page);
+                useLogService.save(UseLogInsert(page, Message.SUCCESS(page).toString(),page));
             }else{
                 page = "login";
             }

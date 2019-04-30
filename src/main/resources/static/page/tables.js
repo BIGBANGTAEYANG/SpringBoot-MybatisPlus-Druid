@@ -33,7 +33,7 @@ function stockSave(){
        data:JSON.stringify(getFormData("stockForm")),
        dataType:"JSON",
        contentType:"application/json;charset=utf-8",
-       success:function(data){
+       success:function(res){
            if(res.returnCode==200){
                table.ajax.reload(null,false); //刷新table且分页不重置
            }else{
@@ -57,7 +57,8 @@ function datetimeInit(){
             today: 'fa fa-calendar-check-o',
             clear: 'fa fa-delete',
             close: 'fa fa-times'
-        }
+        },
+        format:true
     });
 }
 
