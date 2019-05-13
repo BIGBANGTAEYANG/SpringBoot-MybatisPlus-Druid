@@ -35,7 +35,7 @@ function stockSave(){
        contentType:"application/json;charset=utf-8",
        success:function(res){
            if(res.returnCode==200){
-               table.ajax.reload(null,false); //刷新table且分页不重置
+               table.ajax.reload();
            }else{
                alert(res.returnMsg);
            }
@@ -46,7 +46,6 @@ function stockSave(){
 function datetimeInit(){
     //时间控件
     $('#inDate').datetimepicker({
-        useCurrent:true,
         icons: {
             time: 'fa fa-clock',
             date: 'fa fa-calendar',
@@ -58,9 +57,40 @@ function datetimeInit(){
             clear: 'fa fa-delete',
             close: 'fa fa-times'
         },
-        format:true
+        format:"true"
     });
 }
+
+//将时间戳格式化
+function getMyDate(time){
+    var arr=date.split("T");
+    var d=arr[0];
+    var darr = d.split('-');
+
+    var t=arr[1];
+    var tarr = t.split('.000');
+    var marr = tarr[0].split(':');
+
+    var dd = parseInt(darr[0])+"/"+parseInt(darr[1])+"/"+parseInt(darr[2])+" "+parseInt(marr[0])+":"+parseInt(marr[1])+":"+parseInt(marr[2]);
+
+    var time = new Date(Date.parse(dd));
+
+    time.setTime(time.setHours(time.getHours() + 8));
+
+    var Y = time.getFullYear() + '-';
+    var M = this.addZero(time.getMonth() + 1) + '-';
+    var D = this.addZero(time.getDate()) + ' ';
+    var h = this.addZero(time.getHours()) + ':';
+    var m = this.addZero(time.getMinutes()) + ':';
+    var s = this.addZero(time.getSeconds());
+    return Y + M + D;
+}
+
+function addZero(num){
+    return num < 10 ? '0' + num : num;
+}
+
+
 
 function dataTableInit(){
     table = $('#dataTable').DataTable({
@@ -96,7 +126,9 @@ function dataTableInit(){
             { "data": "productPrice", "title": "进价", "name": "productPrice", "visible": true},
             { "data": "productSetPrice", "title": "定价", "name": "productSetPrice", "visible": true},
             { "data": "expressNo", "title": "快递单号", "name": "expressNo", "visible": true},
-            { "data": "inDate", "title": "入库时间", "name": "inDate", "visible": true}
+            { "data": "inDate", "title": "入库时间", "name": "inDate", "visible": true, "method":function(obj){
+                    return getMyDate(obj.inDate)
+                }}
         ],
         oLanguage: {    // 语言设置
             "sLengthMenu": "每页显示 _MENU_ 条记录",
